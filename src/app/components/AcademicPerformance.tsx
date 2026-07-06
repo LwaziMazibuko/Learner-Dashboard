@@ -4,7 +4,13 @@ import {
   Check, X, ArrowLeft, Lock, Brain, Shield,
   TrendingUp, Coins, CreditCard, Sparkles, Clock,
   BarChart3, Target, Award, AlertCircle, PlayCircle,
-  ChevronDown, Lightbulb, Bell, MessageSquare
+  ChevronDown, Lightbulb, Bell, MessageSquare,
+  Umbrella,
+  FileText,
+  PiggyBank,
+  Compass,
+  Heart,
+  Calculator
 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
@@ -30,6 +36,7 @@ interface Module {
   borderColor: string;
   icon: React.ElementType;
   tag: string;
+  category: string;
   questions: Question[];
   learningPoints: string[];
   unlocked: boolean;
@@ -38,6 +45,727 @@ interface Module {
 }
 
 const modules: Module[] = [
+  // ==================== CATEGORY 1: INCOME & EXPENDITURE ====================
+  {
+    id: 'income-basics',
+    title: 'Your Money Story',
+    subtitle: 'Understanding Income',
+    story:
+      "Lerato just started her first job at a retail store in Johannesburg. She earns R6,500 monthly but wonders: 'Is this my real income?' Between PAYE tax, UIF contributions, and transport costs, she's confused about what she actually takes home. Let's help her decode her payslip and understand the difference between gross and net income! 📋",
+    character: 'Lerato',
+    difficulty: 'Starter',
+    difficultyColor: 'text-emerald-700 bg-emerald-50 border-emerald-200',
+    duration: 10,
+    xpReward: 175,
+    gradient: 'from-green-500 to-emerald-600',
+    bgLight: 'from-green-50 to-emerald-50',
+    borderColor: 'border-emerald-200',
+    icon: FileText,
+    tag: '💵 Income',
+    category: 'Income & Expenditure',
+    questions: [
+      {
+        question: 'What is the difference between GROSS and NET income?',
+        options: [
+          'They are exactly the same',
+          'Gross is after deductions, Net is before',
+          'Gross is before deductions, Net is take-home pay',
+          'Net includes bonuses only',
+        ],
+        correct: 2,
+        explanation:
+          "Gross income is your total earnings before any deductions. Net income (take-home pay) is what lands in your bank account after PAYE tax, UIF, pension, and other deductions. Always budget using your NET income! 💡",
+      },
+      {
+        question: 'Lerato earns R6,500 gross. After PAYE (R585), UIF (R65), and pension (R487.50), her net is:',
+        options: ['R5,362.50', 'R6,500', 'R5,850', 'R6,015'],
+        correct: 0,
+        explanation:
+          "R6,500 - R585 - R65 - R487.50 = R5,362.50! Her actual spending power is about R1,137.50 less than she thought. This is why you MUST budget with net income — the deductions add up quickly! 🧮",
+      },
+      {
+        question: 'Which of these is a FIXED expense?',
+        options: [
+          'Groceries that vary each month',
+          'Weekend entertainment',
+          'Monthly rent payment',
+          'New clothes shopping',
+        ],
+        correct: 2,
+        explanation:
+          "Fixed expenses stay the same each month — rent, insurance, loan repayments. Variable expenses change — food, transport, entertainment. Knowing the difference helps you plan better! 📊",
+      },
+      {
+        question: 'What percentage of gross income typically goes to PAYE in South Africa for lower income brackets?',
+        options: ['0% (no tax)', '18-26%', '35%', '45%'],
+        correct: 1,
+        explanation:
+          "For most entry-level earners, PAYE is 18-26% depending on income level. Add UIF (1%) and possible pension contributions, and 20-30% of your salary disappears before you even see it! Budget accordingly. 📉",
+      },
+    ],
+    learningPoints: [
+      'Understand gross vs net income and payslip components',
+      'Identify fixed vs variable expenses',
+      'Calculate true take-home pay after all deductions',
+      'Recognize mandatory deductions like PAYE and UIF',
+    ],
+    unlocked: true,
+    completed: false,
+    progress: 0,
+  },
+  {
+    id: 'expenditure-tracking',
+    title: 'Where Did My Money Go?',
+    subtitle: 'Expenditure Tracking',
+    story:
+      "Mandla earns R12,000 monthly but by the 20th, he's always broke. 'I don't even know where it goes!' he tells his friend. Between airtime, takeaways, transport, and 'small things', R8,000 disappears without a trace. Let's track every rand for 30 days and uncover the truth! 🔍",
+    character: 'Mandla',
+    difficulty: 'Building Up',
+    difficultyColor: 'text-amber-700 bg-amber-50 border-amber-200',
+    duration: 12,
+    xpReward: 200,
+    gradient: 'from-teal-500 to-green-600',
+    bgLight: 'from-teal-50 to-green-50',
+    borderColor: 'border-teal-200',
+    icon: Calculator,
+    tag: '📊 Expenditure',
+    category: 'Income & Expenditure',
+    questions: [
+      {
+        question: 'Mandla spends R45 daily on takeaways. Monthly, this adds up to approximately:',
+        options: ['R450', 'R900', 'R1,350', 'R1,800'],
+        correct: 2,
+        explanation:
+          "R45 × 30 days = R1,350 per month! That's 11% of his R12,000 salary — on takeaways alone. Small daily expenses are budget killers. Track EVERY rand for one month to see your true spending pattern! 📝",
+      },
+      {
+        question: 'Which tracking method gives you the MOST accurate expense picture?',
+        options: [
+          'Guessing from memory',
+          'Checking bank balance once a week',
+          'Recording every expense as it happens',
+          'Asking friends what they spend',
+        ],
+        correct: 2,
+        explanation:
+          "Real-time tracking catches those 'invisible' expenses — the R10 airtime, the R15 kota, the R30 taxi top-up. Use a notebook or app and do it AS you spend, not at month-end when memory fails! 📱",
+      },
+      {
+        question: 'The 50/30/20 rule says: 50% needs, 30% wants, 20% savings. On R12,000, "needs" should be MAX:',
+        options: ['R3,600', 'R4,800', 'R6,000', 'R8,400'],
+        correct: 2,
+        explanation:
+          "50% of R12,000 = R6,000 for needs (rent, food, transport, utilities). If needs exceed 50%, you're 'house poor' — either increase income or find cheaper alternatives for housing/transport! ⚖️",
+      },
+      {
+        question: 'What is "lifestyle creep" and why is it dangerous?',
+        options: [
+          'Living the same regardless of income',
+          'Spending more as your income grows, never saving the difference',
+          'Investing all extra income',
+          'Getting a second job',
+        ],
+        correct: 1,
+        explanation:
+          "Lifestyle creep is the silent budget killer! You get a R2,000 raise and immediately upgrade your phone contract, eat out more, or buy a car — never increasing savings. The key: when income rises, let at least 50% of the increase go to savings first! 📈",
+      },
+    ],
+    learningPoints: [
+      'Track every expense for accurate budgeting',
+      'Identify "invisible" daily spending habits',
+      'Apply the 50/30/20 rule to your real income',
+      'Recognize and avoid lifestyle creep',
+    ],
+    unlocked: true,
+    completed: false,
+    progress: 0,
+  },
+
+  // ==================== CATEGORY 2: SAVINGS & INVESTMENTS ====================
+  {
+    id: 'saving',
+    title: "Sipho's Savings Secret",
+    subtitle: 'Smart Saving Strategies',
+    story:
+      "Sipho works at a call centre in Cape Town and wants a secondhand car in 18 months. He has R1,200 to save monthly. His cousin says 'stash it under the mattress', but his colleague mentions a 32-day notice account. What's Sipho's best move? Let's find out before inflation sneaks up on him! 🚗",
+    character: 'Sipho',
+    difficulty: 'Starter',
+    difficultyColor: 'text-emerald-700 bg-emerald-50 border-emerald-200',
+    duration: 10,
+    xpReward: 175,
+    gradient: 'from-emerald-500 to-teal-600',
+    bgLight: 'from-emerald-50 to-teal-50',
+    borderColor: 'border-emerald-200',
+    icon: PiggyBank,
+    tag: '🏦 Saving',
+    category: 'Savings & Investments',
+    questions: [
+      {
+        question: "Why is keeping money 'under the mattress' a bad idea?",
+        options: [
+          'It could be stolen or damaged',
+          'Inflation eats its value over time',
+          'It earns zero interest',
+          'All of the above',
+        ],
+        correct: 3,
+        explanation:
+          "All three! SA inflation averages ~6% a year, cash earns nothing, and it can be stolen. A bank is safer AND makes your money grow. 🏛️",
+      },
+      {
+        question: 'What makes a 32-day notice account special?',
+        options: [
+          'You wait 32 days to withdraw, but earn higher interest',
+          "It's only for businesses",
+          'It has no minimum balance',
+          'The government guarantees it',
+        ],
+        correct: 0,
+        explanation:
+          "You give 32 days notice before withdrawing, and in return the bank rewards you with better interest rates. Perfect for money you're saving towards a goal! ⏰",
+      },
+      {
+        question: 'Sipho saves R1,200/month for 18 months. How much will he have (before interest)?',
+        options: ['R14,400', 'R18,000', 'R21,600', 'R24,000'],
+        correct: 2,
+        explanation:
+          "R1,200 × 18 = R21,600! Plus the interest earned on top. That's a solid deposit for a reliable car. Consistency always wins! 🚗",
+      },
+      {
+        question: 'What is a Stokvel?',
+        options: [
+          'A type of investment fund',
+          'A group rotating savings scheme',
+          'A government savings program',
+          'A banking app',
+        ],
+        correct: 1,
+        explanation:
+          "A Stokvel is a traditional South African savings club where members contribute monthly and take turns receiving the lump sum. Ubuntu-powered finance! 🤝",
+      },
+    ],
+    learningPoints: [
+      'Understand why cash loses real value over time',
+      'Compare savings accounts and 32-day notice accounts',
+      'Set a savings goal and calculate what you need monthly',
+      'Learn how Stokvels work as community savings tools',
+    ],
+    unlocked: true,
+    completed: false,
+    progress: 0,
+  },
+  {
+    id: 'investing',
+    title: "Lebo's First Investment",
+    subtitle: 'Investing 101',
+    story:
+      "Lebo has saved R15,000 over two years sitting in a 5% savings account. Her friend mentions a Tax-Free Savings Account (TFSA) and JSE unit trusts. Lebo wonders: 'Is investing really for someone like me?' Spoiler: it absolutely is. Let's unlock her wealth potential! 🌱",
+    character: 'Lebo',
+    difficulty: 'Level Up',
+    difficultyColor: 'text-purple-700 bg-purple-50 border-purple-200',
+    duration: 15,
+    xpReward: 300,
+    gradient: 'from-violet-500 to-purple-600',
+    bgLight: 'from-violet-50 to-purple-50',
+    borderColor: 'border-violet-200',
+    icon: TrendingUp,
+    tag: '📈 Investing',
+    category: 'Savings & Investments',
+    questions: [
+      {
+        question: 'A Tax-Free Savings Account (TFSA) in South Africa means:',
+        options: [
+          'Zero tax on growth, interest and withdrawals',
+          'A government grant for saving',
+          'A fee-free bank account',
+          'A retirement annuity for pensioners only',
+        ],
+        correct: 0,
+        explanation:
+          "You can invest up to R36,000/year (R500,000 lifetime) in a TFSA and pay ZERO tax on interest, dividends or capital gains. It's one of the most powerful tools for long-term wealth in SA! 🌱",
+      },
+      {
+        question: "The BIGGEST risk of NOT investing your savings:",
+        options: [
+          'Losing all your money overnight',
+          "Inflation eroding your savings' real value",
+          'Being audited by SARS',
+          'High bank fees',
+        ],
+        correct: 1,
+        explanation:
+          "With SA inflation ~6%, money in a 5% savings account is LOSING real value. Assets that beat inflation — shares, property, unit trusts — are how you grow actual wealth. 📊",
+      },
+      {
+        question: "Diversification in investing means:",
+        options: [
+          'Putting all your money in one winning share',
+          'Spreading investments across different assets to reduce risk',
+          'Only investing in the JSE Top 40',
+          'Keeping money in multiple bank accounts',
+        ],
+        correct: 1,
+        explanation:
+          "Don't put all your eggs in one basket! Spreading across shares, bonds, property and cash means one bad investment won't ruin you. Unit trusts diversify automatically! 🧺",
+      },
+      {
+        question: "Lebo puts R15,000 in + adds R500/month at 10% annual return. After 20 years she'll have roughly:",
+        options: ['R120,000', 'R250,000', 'R420,000', 'Over R500,000'],
+        correct: 3,
+        explanation:
+          "The compound interest miracle! R15,000 + R500/month at 10% for 20 years = ~R550,000+. Einstein called compound interest 'the 8th wonder of the world'. Start early, stay consistent! ✨",
+      },
+    ],
+    learningPoints: [
+      'Understand and open a Tax-Free Savings Account',
+      'See how inflation erodes unprotected savings',
+      'Apply diversification to reduce investment risk',
+      'Harness compound interest over time',
+    ],
+    unlocked: false,
+    completed: false,
+    progress: 0,
+  },
+
+  // ==================== CATEGORY 3: CREDIT & DEBT ====================
+  {
+    id: 'credit',
+    title: 'The Mashonisa Mistake',
+    subtitle: 'Understanding Credit',
+    story:
+      "Nomsa urgently needs R3,000 for school fees. A mashonisa (informal lender) offers it today — but she must repay R5,000 in 30 days. Her bank offers a personal loan at 28% per year. Which should she choose? This decision could affect years of her financial life... 🤔",
+    character: 'Nomsa',
+    difficulty: 'Building Up',
+    difficultyColor: 'text-amber-700 bg-amber-50 border-amber-200',
+    duration: 12,
+    xpReward: 225,
+    gradient: 'from-amber-500 to-orange-600',
+    bgLight: 'from-amber-50 to-orange-50',
+    borderColor: 'border-amber-200',
+    icon: CreditCard,
+    tag: '💳 Credit',
+    category: 'Credit & Debt',
+    questions: [
+      {
+        question: "The mashonisa charges R2,000 on a R3,000 loan in 30 days. Annualised, this is roughly:",
+        options: ['28% per year', '66% per year', '200% per year', 'Over 800% per year'],
+        correct: 3,
+        explanation:
+          "66.7% per MONTH annualises to over 800%! Compare that to a bank's 28% per year. Informal lenders are dangerously expensive. Always use NCR-registered lenders! 🚨",
+      },
+      {
+        question: 'Your credit score reflects:',
+        options: [
+          'How much money you have saved',
+          'Your history of repaying debts on time',
+          'Your monthly salary amount',
+          'How many bank accounts you have',
+        ],
+        correct: 1,
+        explanation:
+          "Your score (from TransUnion, Experian, or Compuscan) shows how reliably you repay debt. A good score unlocks lower interest rates and better loan terms. Pay on time! ✅",
+      },
+      {
+        question: 'Before taking any loan, Nomsa MUST check:',
+        options: [
+          'Whether the lender is registered with the NCR',
+          'The total repayment amount (not just monthly installment)',
+          'The interest rate compared to other options',
+          'All of the above',
+        ],
+        correct: 3,
+        explanation:
+          "Always check all three! The NCR (National Credit Regulator) registers legal lenders. Know EXACTLY what you'll repay in total — interest adds up fast! 🔍",
+      },
+      {
+        question: 'Nomsa takes the bank loan: R3,000 at 28% p.a. for 12 months. Total repayment is roughly:',
+        options: ['R3,000', 'R3,420', 'R3,840', 'R5,000'],
+        correct: 2,
+        explanation:
+          "28% of R3,000 = R840 interest, so ~R3,840 total vs the mashonisa's R5,000. The bank saves Nomsa R1,160! Formal credit always wins when used responsibly. 💰",
+      },
+    ],
+    learningPoints: [
+      'Calculate and compare real interest rates',
+      'Understand what affects your credit score',
+      'Always use NCR-registered lenders',
+      'Know your rights under the National Credit Act',
+    ],
+    unlocked: true,
+    completed: false,
+    progress: 0,
+  },
+  {
+    id: 'debt-management',
+    title: 'Breaking Free from Debt',
+    subtitle: 'Debt Management Strategies',
+    story:
+      "Themba has three debts: a clothing account (R4,500 at 22% interest), a personal loan (R12,000 at 28%), and a credit card (R8,000 at 20%). He's paying minimum on all three and getting nowhere. His total debt is R24,500 and interest is eating him alive. Let's create a debt escape plan! 🔓",
+    character: 'Themba',
+    difficulty: 'Level Up',
+    difficultyColor: 'text-purple-700 bg-purple-50 border-purple-200',
+    duration: 15,
+    xpReward: 275,
+    gradient: 'from-red-500 to-rose-600',
+    bgLight: 'from-red-50 to-rose-50',
+    borderColor: 'border-red-200',
+    icon: AlertCircle,
+    tag: '🔓 Debt-Free',
+    category: 'Credit & Debt',
+    questions: [
+      {
+        question: 'The "debt avalanche" method means paying off debts in order of:',
+        options: [
+          'Smallest balance first',
+          'Largest balance first',
+          'Highest interest rate first',
+          'Oldest debt first',
+        ],
+        correct: 2,
+        explanation:
+          "Avalanche = highest interest rate first. It saves you the most money mathematically. Themba should attack the personal loan (28%) first, then clothing (22%), then credit card (20%). Each debt killed frees up money for the next! 🏔️",
+      },
+      {
+        question: 'If Themba pays only the minimum (3% of balance) on R12,000 at 28%, how long to clear it?',
+        options: ['6 months', '1 year', '3 years', 'Over 5 years'],
+        correct: 3,
+        explanation:
+          "Minimum payments are a trap! At 3% minimum + 28% interest, it would take 5+ years and cost over R20,000 total. Always pay MORE than the minimum — every extra rand goes to the principal balance! ⏰",
+      },
+      {
+        question: 'What is debt consolidation?',
+        options: [
+          'Borrowing more to pay existing debts',
+          'Combining multiple debts into one lower-interest loan',
+          'Ignoring debts until they go away',
+          'Paying debts randomly',
+        ],
+        correct: 1,
+        explanation:
+          "Consolidation replaces multiple high-interest debts with one lower-rate loan. This simplifies payments AND saves on interest — but ONLY if the new rate is genuinely lower and you stop accumulating new debt! 🔄",
+      },
+      {
+        question: 'Under debt review in South Africa, what happens?',
+        options: [
+          'Your debts are wiped clean',
+          'A debt counsellor negotiates reduced payments legally',
+          'You go to prison',
+          'You must sell everything you own',
+        ],
+        correct: 1,
+        explanation:
+          "Debt review is a legal process under the National Credit Act. A registered debt counsellor negotiates with creditors for reduced payments you can afford. You're protected from legal action while under review, but you can't take new credit! ⚖️",
+      },
+    ],
+    learningPoints: [
+      'Use debt avalanche or snowball methods strategically',
+      'Understand the minimum payment trap',
+      'Evaluate debt consolidation options carefully',
+      'Know when and how to use debt review legally',
+    ],
+    unlocked: false,
+    completed: false,
+    progress: 0,
+  },
+
+  // ==================== CATEGORY 4: FINANCIAL PLANNING & GOAL SETTING ====================
+  {
+    id: 'goal-setting',
+    title: 'Dream It, Plan It, Achieve It',
+    subtitle: 'Financial Goal Setting',
+    story:
+      "Amina is 25 with a clear vision: buy a R350,000 house in 5 years, start a side business within 2 years, and have R50,000 emergency fund within 18 months. But her R15,000 salary makes these feel impossible. Let's use SMART goal-setting to break her dreams into achievable monthly targets! 🎯",
+    character: 'Amina',
+    difficulty: 'Building Up',
+    difficultyColor: 'text-amber-700 bg-amber-50 border-amber-200',
+    duration: 12,
+    xpReward: 225,
+    gradient: 'from-indigo-500 to-blue-600',
+    bgLight: 'from-indigo-50 to-blue-50',
+    borderColor: 'border-indigo-200',
+    icon: Target,
+    tag: '🎯 Goals',
+    category: 'Financial Planning',
+    questions: [
+      {
+        question: 'SMART goals stand for:',
+        options: [
+          'Simple, Meaningful, Achievable, Real, Timed',
+          'Specific, Measurable, Achievable, Relevant, Time-bound',
+          'Strategic, Monetary, Actionable, Reliable, Tested',
+          'Savings, Money, Assets, Returns, Tax',
+        ],
+        correct: 1,
+        explanation:
+          "SMART = Specific, Measurable, Achievable, Relevant, Time-bound. 'I want to save R50,000 for a house deposit by December 2026' is SMART. 'I want to save money someday' is just a wish! 📝",
+      },
+      {
+        question: 'Amina wants R50,000 in 18 months. How much must she save monthly?',
+        options: ['R833', 'R1,667', 'R2,778', 'R3,500'],
+        correct: 2,
+        explanation:
+          "R50,000 ÷ 18 = R2,778/month. But wait — if she puts it in a 7% interest account, she only needs about R2,620/month because interest helps! Always calculate monthly targets for every goal. 🔢",
+      },
+      {
+        question: 'What is an emergency fund and how much should it cover?',
+        options: [
+          'Money for shopping sales — 1 week of expenses',
+          'Cash for unexpected crises — 3-6 months of expenses',
+          'Investment for retirement — 20 years of expenses',
+          'Money for holiday travel — whatever you want',
+        ],
+        correct: 1,
+        explanation:
+          "An emergency fund covers 3-6 months of essential expenses (rent, food, transport) for job loss, medical emergencies, or major repairs. Build this BEFORE aggressive investing — it's your financial safety net! 🛟",
+      },
+      {
+        question: 'For Amina\'s R350,000 house goal, a 10% deposit is R35,000 in 5 years. Monthly savings needed:',
+        options: ['R292', 'R583', 'R875', 'R1,167'],
+        correct: 1,
+        explanation:
+          "R35,000 ÷ 60 months = R583/month. Combine this with her other goals (emergency fund R2,778/month, business R500/month) and Amina needs about R3,861/month total for all goals. Prioritization is key when income is limited! 🏠",
+      },
+    ],
+    learningPoints: [
+      'Set SMART financial goals with specific timelines',
+      'Calculate monthly savings needed for each goal',
+      'Build an emergency fund before aggressive investing',
+      'Prioritize multiple goals when income is limited',
+    ],
+    unlocked: true,
+    completed: false,
+    progress: 0,
+  },
+  {
+    id: 'financial-planning',
+    title: 'Your Money Roadmap',
+    subtitle: 'Comprehensive Financial Planning',
+    story:
+      "At 30, David earns R25,000/month but has no plan. No retirement savings, no will, no investments — just month-to-month survival. His uncle retired with nothing and now struggles. David wants a different future. Let's build his complete financial roadmap covering short, medium, and long-term goals! 🗺️",
+    character: 'David',
+    difficulty: 'Level Up',
+    difficultyColor: 'text-purple-700 bg-purple-50 border-purple-200',
+    duration: 15,
+    xpReward: 300,
+    gradient: 'from-blue-600 to-indigo-700',
+    bgLight: 'from-blue-50 to-indigo-50',
+    borderColor: 'border-blue-200',
+    icon: Compass,
+    tag: '🗺️ Planning',
+    category: 'Financial Planning',
+    questions: [
+      {
+        question: 'At 30, what percentage of salary should David ideally save for retirement?',
+        options: ['5%', '10%', '15-20%', '50%'],
+        correct: 2,
+        explanation:
+          "Financial planners recommend 15-20% of gross income for retirement, starting in your 20s/30s. For David, that's R3,750-R5,000/month. Starting at 30 vs 40 means DOUBLE the final amount due to compound interest! ⏳",
+      },
+      {
+        question: 'What is a retirement annuity (RA) and its key benefit?',
+        options: [
+          'A bank savings account with no tax benefits',
+          'A long-term retirement investment with tax deductions on contributions',
+          'A government pension for everyone',
+          'A short-term investment for 5 years',
+        ],
+        correct: 1,
+        explanation:
+          "RA contributions (up to 27.5% of income, max R350,000/year) are tax-deductible — meaning SARS gives you money back! Plus, growth inside the RA is tax-free until withdrawal at 55+. Double tax win! 🏦",
+      },
+      {
+        question: 'Why does David need a will even at 30?',
+        options: [
+          'Only rich people need wills',
+          'A will ensures his assets go to his chosen beneficiaries, not the state',
+          'Wills are only for old people',
+          'The bank automatically handles everything',
+        ],
+        correct: 1,
+        explanation:
+          "Without a will, your assets are distributed according to intestate succession laws — which may NOT match your wishes. If you have children, dependents, or ANY assets (including a phone, bank account, or funeral policy), you need a will! 📜",
+      },
+      {
+        question: 'The financial planning pyramid order (bottom to top) is:',
+        options: [
+          'Investing → Saving → Protection → Estate planning',
+          'Protection → Emergency fund → Saving/Investing → Estate planning',
+          'Estate planning → Investing → Saving → Protection',
+          'Saving → Protection → Estate planning → Investing',
+        ],
+        correct: 1,
+        explanation:
+          "Build your foundation first: protection (insurance, medical aid), then emergency fund, then saving/investing for goals, and finally estate planning (wills, trusts). You can't invest if one emergency will bankrupt you! 🔺",
+      },
+    ],
+    learningPoints: [
+      'Understand retirement savings targets by age',
+      'Know the tax benefits of retirement annuities',
+      'Create a will regardless of wealth level',
+      'Apply the financial planning pyramid in correct order',
+    ],
+    unlocked: false,
+    completed: false,
+    progress: 0,
+  },
+
+  // ==================== CATEGORY 5: PROTECTION & RESILIENCE ====================
+  {
+    id: 'insurance-basics',
+    title: 'Shielding Your Future',
+    subtitle: 'Insurance & Protection',
+    story:
+      "Bongi's flat was burgled last month — laptop, TV, and phone gone. No insurance. R18,000 loss. Her colleague pays R450/month for comprehensive cover. Bongi thought insurance was 'for rich people' but now she's paying the painful price. Let's understand what protection really costs vs the risk of having none! 🛡️",
+    character: 'Bongi',
+    difficulty: 'Building Up',
+    difficultyColor: 'text-amber-700 bg-amber-50 border-amber-200',
+    duration: 12,
+    xpReward: 225,
+    gradient: 'from-slate-600 to-gray-700',
+    bgLight: 'from-slate-50 to-gray-50',
+    borderColor: 'border-slate-200',
+    icon: Shield,
+    tag: '🛡️ Protection',
+    category: 'Protection & Resilience',
+    questions: [
+      {
+        question: 'Bongi lost R18,000 in the burglary. Insurance at R450/month costs R5,400/year. The math shows:',
+        options: [
+          'Insurance is always a waste of money',
+          'She would need 3+ years without a claim to "break even" — but one event changes everything',
+          'Insurance only covers fire',
+          'She should just buy cheaper stuff',
+        ],
+        correct: 1,
+        explanation:
+          "Insurance is about RISK TRANSFER. Can you afford an R18,000 loss? Most can't. R450/month protects against catastrophic loss. For expensive items you can't replace instantly, insurance is essential! 🔐",
+      },
+      {
+        question: 'What does "excess" (deductible) mean in insurance?',
+        options: [
+          'Extra coverage you can buy',
+          'The amount YOU pay first before insurance covers the rest',
+          'A refund from the insurance company',
+          'Free additional benefits',
+        ],
+        correct: 1,
+        explanation:
+          "Excess is your 'skin in the game'. If your excess is R2,000 and the claim is R10,000, you pay R2,000 and insurance pays R8,000. Higher excess = lower monthly premiums, but more out-of-pocket when claiming. Choose wisely! ⚖️",
+      },
+      {
+        question: 'Life insurance is MOST important when:',
+        options: [
+          "You're single with no dependents",
+          'You have children or family who depend on your income',
+          "You're a student",
+          'You have no debt',
+        ],
+        correct: 1,
+        explanation:
+          "Life insurance replaces your income for dependents if you die. If no one relies on your income financially, you may not need it yet. But the moment you have kids, a spouse, or aging parents depending on you — get covered! 👨‍👩‍👧‍👦",
+      },
+      {
+        question: 'In South Africa, medical aid vs hospital cash plan — the key difference is:',
+        options: [
+          'They are identical',
+          'Medical aid covers actual medical costs; hospital cash pays a fixed daily amount',
+          'Hospital cash plans are always better',
+          'Medical aid is only for the elderly',
+        ],
+        correct: 1,
+        explanation:
+          "Medical aid pays for actual hospital bills, doctor visits, and medication (often tens of thousands). Hospital cash plans just give you a fixed daily cash amount (e.g., R2,000/day) — which may barely cover one test. Know the difference! 🏥",
+      },
+    ],
+    learningPoints: [
+      'Understand insurance as risk transfer, not waste',
+      'Know how excess affects premiums and claims',
+      'Identify when life insurance becomes essential',
+      'Differentiate medical aid from hospital cash plans',
+    ],
+    unlocked: true,
+    completed: false,
+    progress: 0,
+  },
+  {
+    id: 'resilience-planning',
+    title: 'Bouncing Back Stronger',
+    subtitle: 'Financial Resilience',
+    story:
+      "During COVID-19, Patricia lost her restaurant job of 8 years. Her R2,000 savings lasted 2 weeks. No emergency fund, no side income, no UIF claim knowledge. She moved back home at 35, starting from zero. Now employed again, she wants to build REAL resilience. Let's create a financial shock absorber! 💪",
+    character: 'Patricia',
+    difficulty: 'Level Up',
+    difficultyColor: 'text-purple-700 bg-purple-50 border-purple-200',
+    duration: 15,
+    xpReward: 300,
+    gradient: 'from-orange-500 to-red-600',
+    bgLight: 'from-orange-50 to-red-50',
+    borderColor: 'border-orange-200',
+    icon: Heart,
+    tag: '💪 Resilience',
+    category: 'Protection & Resilience',
+    questions: [
+      {
+        question: 'UIF (Unemployment Insurance Fund) in South Africa provides:',
+        options: [
+          'A full salary replacement forever',
+          'Temporary income for up to 12 months if you lose your job',
+          'A once-off R10,000 payment',
+          'Only maternity benefits',
+        ],
+        correct: 1,
+        explanation:
+          "UIF pays 38-60% of your salary (capped at R17,712/month) for up to 12 months if you're retrenched or your contract ends. But it takes 4-8 weeks to process — hence the need for an emergency fund! Both employer AND employee contribute 1% each. 📋",
+      },
+      {
+        question: 'Multiple income streams reduce risk. Which is an example?',
+        options: [
+          'Having one high-paying job',
+          'Working overtime at the same company',
+          'A full-time job plus a weekend side hustle plus rental income',
+          'Relying on family for money',
+        ],
+        correct: 2,
+        explanation:
+          "If you lose your main job, a side hustle or rental income keeps SOME money flowing. Aim for 2-3 income sources. Even R1,500/month from weekend work = R18,000/year safety buffer. Diversify your income like you diversify investments! 🔀",
+      },
+      {
+        question: 'An emergency fund should be kept in:',
+        options: [
+          'Long-term fixed deposit you cannot access',
+          'A liquid, easily accessible account like a money market or savings account',
+          'Risky shares on the JSE',
+          'Cryptocurrency for quick growth',
+        ],
+        correct: 1,
+        explanation:
+          "Emergency funds need LIQUIDITY — access within 24-48 hours. A 32-day notice account is too slow for emergencies! Use instant-access savings or money market accounts. Sacrifice some interest for immediate access when crisis hits. 🚨",
+      },
+      {
+        question: 'The "3-6 month rule" for emergency funds means savings equal to:',
+        options: [
+          '3-6 months of your salary',
+          '3-6 months of essential expenses only',
+          '3-6 months of luxury spending',
+          '3-6 paychecks regardless of expenses',
+        ],
+        correct: 1,
+        explanation:
+          "Calculate ESSENTIAL monthly expenses (rent, food, transport, utilities, debt minimums) and multiply by 3-6. For Patricia earning R8,000 with R5,500 essentials, she needs R16,500-R33,000 saved. It takes time — start with R1,000 then build to one month, then three! 📈",
+      },
+    ],
+    learningPoints: [
+      'Understand UIF benefits and how to claim them',
+      'Build multiple income streams for resilience',
+      'Keep emergency funds liquid and accessible',
+      'Calculate personal emergency fund target based on expenses',
+    ],
+    unlocked: false,
+    completed: false,
+    progress: 0,
+  },
+
+  // ==================== ORIGINAL MODULES (KEPT & REORGANIZED) ====================
   {
     id: 'budgeting',
     title: 'The Payday Trap',
@@ -54,6 +782,7 @@ const modules: Module[] = [
     borderColor: 'border-sky-200',
     icon: Coins,
     tag: '💰 Budgeting',
+    category: 'Income & Expenditure',
     questions: [
       {
         question:
@@ -111,143 +840,6 @@ const modules: Module[] = [
     progress: 0,
   },
   {
-    id: 'saving',
-    title: "Sipho's Savings Secret",
-    subtitle: 'Smart Saving',
-    story:
-      "Sipho works at a call centre in Cape Town and wants a secondhand car in 18 months. He has R1,200 to save monthly. His cousin says 'stash it under the mattress', but his colleague mentions a 32-day notice account. What's Sipho's best move? Let's find out before inflation sneaks up on him! 🚗",
-    character: 'Sipho',
-    difficulty: 'Starter',
-    difficultyColor: 'text-emerald-700 bg-emerald-50 border-emerald-200',
-    duration: 10,
-    xpReward: 175,
-    gradient: 'from-emerald-500 to-teal-600',
-    bgLight: 'from-emerald-50 to-teal-50',
-    borderColor: 'border-emerald-200',
-    icon: TrendingUp,
-    tag: '🏦 Saving',
-    questions: [
-      {
-        question: "Why is keeping money 'under the mattress' a bad idea?",
-        options: [
-          'It could be stolen or damaged',
-          'Inflation eats its value over time',
-          'It earns zero interest',
-          'All of the above',
-        ],
-        correct: 3,
-        explanation:
-          "All three! SA inflation averages ~6% a year, cash earns nothing, and it can be stolen. A bank is safer AND makes your money grow. 🏛️",
-      },
-      {
-        question: 'What makes a 32-day notice account special?',
-        options: [
-          'You wait 32 days to withdraw, but earn higher interest',
-          "It's only for businesses",
-          'It has no minimum balance',
-          'The government guarantees it',
-        ],
-        correct: 0,
-        explanation:
-          "You give 32 days notice before withdrawing, and in return the bank rewards you with better interest rates. Perfect for money you're saving towards a goal! ⏰",
-      },
-      {
-        question: 'Sipho saves R1,200/month for 18 months. How much will he have (before interest)?',
-        options: ['R14,400', 'R18,000', 'R21,600', 'R24,000'],
-        correct: 2,
-        explanation:
-          "R1,200 × 18 = R21,600! Plus the interest earned on top. That's a solid deposit for a reliable car. Consistency always wins! 🚗",
-      },
-      {
-        question: 'What is a Stokvel?',
-        options: [
-          'A type of investment fund',
-          'A group rotating savings scheme',
-          'A government savings program',
-          'A banking app',
-        ],
-        correct: 1,
-        explanation:
-          "A Stokvel is a traditional South African savings club where members contribute monthly and take turns receiving the lump sum. Ubuntu-powered finance! 🤝",
-      },
-    ],
-    learningPoints: [
-      'Understand why cash loses real value over time',
-      'Compare savings accounts and 32-day notice accounts',
-      'Set a savings goal and calculate what you need monthly',
-      'Learn how Stokvels work as community savings tools',
-    ],
-    unlocked: true,
-    completed: true,
-    progress: 100,
-  },
-  {
-    id: 'credit',
-    title: 'The Mashonisa Mistake',
-    subtitle: 'Understanding Credit',
-    story:
-      "Nomsa urgently needs R3,000 for school fees. A mashonisa (informal lender) offers it today — but she must repay R5,000 in 30 days. Her bank offers a personal loan at 28% per year. Which should she choose? This decision could affect years of her financial life... 🤔",
-    character: 'Nomsa',
-    difficulty: 'Building Up',
-    difficultyColor: 'text-amber-700 bg-amber-50 border-amber-200',
-    duration: 12,
-    xpReward: 225,
-    gradient: 'from-amber-500 to-orange-600',
-    bgLight: 'from-amber-50 to-orange-50',
-    borderColor: 'border-amber-200',
-    icon: CreditCard,
-    tag: '💳 Credit',
-    questions: [
-      {
-        question: "The mashonisa charges R2,000 on a R3,000 loan in 30 days. Annualised, this is roughly:",
-        options: ['28% per year', '66% per year', '200% per year', 'Over 800% per year'],
-        correct: 3,
-        explanation:
-          "66.7% per MONTH annualises to over 800%! Compare that to a bank's 28% per year. Informal lenders are dangerously expensive. Always use NCR-registered lenders! 🚨",
-      },
-      {
-        question: 'Your credit score reflects:',
-        options: [
-          'How much money you have saved',
-          'Your history of repaying debts on time',
-          'Your monthly salary amount',
-          'How many bank accounts you have',
-        ],
-        correct: 1,
-        explanation:
-          "Your score (from TransUnion, Experian, or Compuscan) shows how reliably you repay debt. A good score unlocks lower interest rates and better loan terms. Pay on time! ✅",
-      },
-      {
-        question: 'Before taking any loan, Nomsa MUST check:',
-        options: [
-          'Whether the lender is registered with the NCR',
-          'The total repayment amount (not just monthly installment)',
-          'The interest rate compared to other options',
-          'All of the above',
-        ],
-        correct: 3,
-        explanation:
-          "Always check all three! The NCR (National Credit Regulator) registers legal lenders. Know EXACTLY what you'll repay in total — interest adds up fast! 🔍",
-      },
-      {
-        question: 'Nomsa takes the bank loan: R3,000 at 28% p.a. for 12 months. Total repayment is roughly:',
-        options: ['R3,000', 'R3,420', 'R3,840', 'R5,000'],
-        correct: 2,
-        explanation:
-          "28% of R3,000 = R840 interest, so ~R3,840 total vs the mashonisa's R5,000. The bank saves Nomsa R1,160! Formal credit always wins when used responsibly. 💰",
-      },
-    ],
-    learningPoints: [
-      'Calculate and compare real interest rates',
-      'Understand what affects your credit score',
-      'Always use NCR-registered lenders',
-      'Know your rights under the National Credit Act',
-    ],
-    unlocked: true,
-    completed: false,
-    progress: 50,
-  },
-  {
     id: 'digital',
     title: "Don't Get Phished!",
     subtitle: 'Mobile Banking Safety',
@@ -261,8 +853,9 @@ const modules: Module[] = [
     gradient: 'from-rose-500 to-pink-600',
     bgLight: 'from-rose-50 to-pink-50',
     borderColor: 'border-rose-200',
-    icon: Shield,
+    icon: Umbrella,
     tag: '🔐 Safety',
+    category: 'Protection & Resilience',
     questions: [
       {
         question: "That SMS Zanele received is most likely:",
@@ -315,77 +908,6 @@ const modules: Module[] = [
       'Know exactly what to share (and not share) with banks',
     ],
     unlocked: true,
-    completed: false,
-    progress: 0,
-  },
-  {
-    id: 'investing',
-    title: "Lebo's First Investment",
-    subtitle: 'Investing 101',
-    story:
-      "Lebo has saved R15,000 over two years sitting in a 5% savings account. Her friend mentions a Tax-Free Savings Account (TFSA) and JSE unit trusts. Lebo wonders: 'Is investing really for someone like me?' Spoiler: it absolutely is. Let's unlock her wealth potential! 🌱",
-    character: 'Lebo',
-    difficulty: 'Level Up',
-    difficultyColor: 'text-purple-700 bg-purple-50 border-purple-200',
-    duration: 15,
-    xpReward: 300,
-    gradient: 'from-violet-500 to-purple-600',
-    bgLight: 'from-violet-50 to-purple-50',
-    borderColor: 'border-violet-200',
-    icon: Brain,
-    tag: '📈 Investing',
-    questions: [
-      {
-        question: 'A Tax-Free Savings Account (TFSA) in South Africa means:',
-        options: [
-          'Zero tax on growth, interest and withdrawals',
-          'A government grant for saving',
-          'A fee-free bank account',
-          'A retirement annuity for pensioners only',
-        ],
-        correct: 0,
-        explanation:
-          "You can invest up to R36,000/year (R500,000 lifetime) in a TFSA and pay ZERO tax on interest, dividends or capital gains. It's one of the most powerful tools for long-term wealth in SA! 🌱",
-      },
-      {
-        question: "The BIGGEST risk of NOT investing your savings:",
-        options: [
-          'Losing all your money overnight',
-          "Inflation eroding your savings' real value",
-          'Being audited by SARS',
-          'High bank fees',
-        ],
-        correct: 1,
-        explanation:
-          "With SA inflation ~6%, money in a 5% savings account is LOSING real value. Assets that beat inflation — shares, property, unit trusts — are how you grow actual wealth. 📊",
-      },
-      {
-        question: "Diversification in investing means:",
-        options: [
-          'Putting all your money in one winning share',
-          'Spreading investments across different assets to reduce risk',
-          'Only investing in the JSE Top 40',
-          'Keeping money in multiple bank accounts',
-        ],
-        correct: 1,
-        explanation:
-          "Don't put all your eggs in one basket! Spreading across shares, bonds, property and cash means one bad investment won't ruin you. Unit trusts diversify automatically! 🧺",
-      },
-      {
-        question: "Lebo puts R15,000 in + adds R500/month at 10% annual return. After 20 years she'll have roughly:",
-        options: ['R120,000', 'R250,000', 'R420,000', 'Over R500,000'],
-        correct: 3,
-        explanation:
-          "The compound interest miracle! R15,000 + R500/month at 10% for 20 years = ~R550,000+. Einstein called compound interest 'the 8th wonder of the world'. Start early, stay consistent! ✨",
-      },
-    ],
-    learningPoints: [
-      'Understand and open a Tax-Free Savings Account',
-      'See how inflation erodes unprotected savings',
-      'Apply diversification to reduce investment risk',
-      'Harness compound interest over time',
-    ],
-    unlocked: false,
     completed: false,
     progress: 0,
   },

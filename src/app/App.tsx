@@ -161,7 +161,7 @@ export default function App() {
                   {isManager ? <Building2 className="w-6 h-6 text-white" /> : isTeacher ? <ClipboardList className="w-6 h-6 text-white" /> : <GraduationCap className="w-6 h-6 text-white" />}
                 </div>
                 <div>
-                  <h1 className="font-bold text-gray-900">EduTrack</h1>
+                  <h1 className="font-bold text-gray-900">RM Learner Management </h1>
                   <p className="text-xs text-gray-500">{isManager ? 'Centre Manager Portal' : isTeacher ? 'Teacher Portal' : 'Student Portal'}</p>
                 </div>
               </div>
