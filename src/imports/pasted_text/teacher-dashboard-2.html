@@ -1,0 +1,2108 @@
+<!-- templates/teacher/teacher-dashboard.html -->
+{% extends 'base/teacher-base.html' %}
+{% load static %}
+{% include 'base/header.html' %}
+{% block content %}
+<style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+    *{
+        margin: 0;
+        padding: 0;
+        border: none;
+        outline: none;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+    }
+    body {
+        display: flex;
+        
+    }
+
+    .logo {
+        height: 80px;
+        padding: 16px;
+    }
+    .menu {
+        height: 88%;
+        position: relative;
+        list-style: none;
+        padding: 0;
+    }
+    .menu li{
+        padding: 1rem;
+        margin: 8px 0;
+        border-radius: 8px;
+        transition: all 0.5s ease-in-out;
+    }
+    .menu li:hover, .active{
+        background: #e0e0e058;
+    }
+    .menu a{
+        color: #fff;
+        font-size: 14px;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+    .menu a span{
+        overflow: hidden;
+    }
+    .menu a i{
+        font-size: 1.2rem;
+    }
+    .logout{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+    }
+    .main--content{
+        position: relative;
+        background: #ebe9e9 ;
+        width: 100%;
+        padding: 1rem;
+    }
+    .header--wrapper img{
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+        border-radius: 50%;
+    }
+    .header--wrapper{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        background: #fff;
+        border-radius: 10px;
+        padding: 10px 2rem;
+        margin-bottom: 1rem;
+    }
+    .header--title{
+        color:skyblue;
+    }
+    .user--info{
+        display: flex;
+        align-items: center;
+        gap: 1;
+    }
+    .search--box{
+        background: rgb(237, 237, 237);
+        border-radius: 15px;
+        color: skyblue;
+        display: flex;
+        align-items: center;
+        gap: 40px;
+        padding: 4px 12px;
+    }
+    .search--box input{
+        background: transparent;
+        padding: 10px;
+    }
+    .search--box i{
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: all 0.5s ease-out;
+    }
+    .search--box i:hover{
+        transition: scale(1.2);
+    }
+
+    .card-container{
+         background: #fff;
+         padding: 2rem;
+         border-radius: 10px;
+    }
+
+    .card-wrapper{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+    } 
+    .main--title{
+        color: skyblue;
+        padding-bottom: 10px;
+        font-size: 15px;
+    }
+    .payment--card{
+        background: rgb(229, 223, 223);
+        border-radius: 10px;
+        padding: 1.2rem;
+        width: 290px;
+        height: 150px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: all 0.5s ease-in-out ;
+    }
+
+    .payment--card:hover{
+        transform: translateY(-5px);
+    }
+
+    .card-header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    } 
+    .amount{
+        display: flex;
+        flex-direction: column;
+    }
+    .title{
+        font-size: 12px;
+        font-weight: 200;
+    }
+    .amount--value {
+        font-size: 24px;
+        font-family: "Courier New", Courier,
+        monospace;
+        font-weight: 600;    
+    }
+    .icon{
+        color: #fff;
+        padding: 1rem;
+        height: 60px;
+        width: 60px;
+        text-align: center;
+        border-radius: 50%;
+        border-color: skyblue;
+        border-style: solid;
+        font-size: 1.5rem;
+        background: white;
+    }
+    .card-detail{
+        font-size: 18px;
+        color: #777777;
+        letter-spacing: 2px;
+        font-family:  "Courier New", Courier,
+        monospace;
+    }
+
+    .light-red{
+        background: rgb(251, 233, 233);
+    }
+    .light-purplr{
+        background: rgb(254, 226, 254);
+    }
+    .light-green{
+        background: rgb(235, 254, 235);
+    }
+    .light-blue{
+        background: rgb(236, 236, 254);
+    }
+    .dark-red{
+        background: red;
+    }
+    .dark-purple{
+        background: purple;
+    }
+    .dark-green{
+        background: green;
+    }
+    .dark-blue{
+        background: blue;
+    }
+
+    .tabular--wrapper{
+        background: #fff;
+        margin-top: 1rem;
+        border-radius: 10px;
+        padding: 2rem;
+    }
+    .table-container{
+        width: 100%;
+    }
+    .table{
+        width: 100%;
+        border-collapse: collapse;
+    }
+    thead{
+        background: skyblue;
+        color: #fff;
+    }
+    th{
+        padding: 15px;
+        text-align: left;
+    }
+    tbody{
+        background: #f2f2f2;
+    }
+    td{
+        padding: 15px;
+        font-size: 14px;
+        color: #333;
+    }
+    tr:nth-child(even){
+        background: #ffff;
+    }
+    tfoot{
+        background: rgba(113, 99, 186, 255);
+        font-weight: bold;
+        color: #fff;
+    }
+    tfoot td{
+        padding: 15px;
+    }
+    .table-container button{
+        color: green;
+        background: none;
+        cursor: pointer;
+    }
+
+</style>
+<style>
+    /* Add your custom styles here */
+    .container {
+        padding: 2rem;
+    }
+    .text-blue-500 {
+        color: #3B82F6;
+    }
+    .text-slate-600 {
+        color: #64748B;
+    }
+    .bg-white { 
+        background-color: white;
+    }
+    .shadow {
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    .rounded {
+        border-radius: 0.25rem;
+    }
+    .font-bold {
+        font-weight: bold;
+    }
+    .font-semibold {
+        font-weight: 600;
+    }
+    .grid {
+        display: grid;
+    }
+    .grid-cols-1 {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+    .grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .grid-cols-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .gap-1 {
+        gap: 0.25rem;
+    }
+    .gap-4 {
+        gap: 1rem;
+    }
+    .my-2 {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+    .p-1 {
+        padding: 0.25rem;
+    }
+    .p-2 {
+        padding: 0.5rem;
+    }
+    .p-4 {
+        padding: 1rem;
+    }
+    .py-1 {
+        padding-top: 0.25rem;
+        padding-bottom: 0.25rem;
+    }
+    .py-4 {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+    .px-2 {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+    .mt-6 {
+        margin-top: 1.5rem;
+    }
+    .text-right {
+        text-align: right;
+    }
+    .float-right {
+        float: right;
+    }
+    .w-full {
+        width: 100%;
+    }
+    .sticky {
+        position: sticky;
+        top: 1rem;
+    }
+    .border-b {
+        border-bottom: 1px solid #E5E7EB;
+    }
+    .border-t {
+        border-top: 1px solid #E5E7EB;
+    }
+</style>
+<style>
+    /* Additional styles for circular progress bars */
+    .circular-chart {
+        display: block;
+        margin: 10px auto;
+        max-width: 80%;
+        max-height: 250px;
+    }
+    .circle-bg {
+        fill: none;
+        stroke: #eee;
+        stroke-width: 3.8;
+    }
+    .circle {
+        fill: none;
+        stroke-width: 2.8;
+        stroke-linecap: round;
+        animation: progress 1s ease-out forwards;
+    }
+    .percentage {
+        fill: #0891B2;
+        font-family: sans-serif;
+        font-size: 0.5em;
+        text-anchor: middle;
+    }
+    @keyframes progress {
+        0% {
+            stroke-dasharray: 0 100;
+        }
+    }
+    .blue .circle {
+        stroke: #0891B2;
+    }
+    
+</style>
+<style>
+    /* Enhanced CSS for the popup */
+    #popupMessage {
+        display: none;
+        position: fixed;
+        left: 50%;
+        top: 30%;
+        transform: translate(-50%, -50%);
+        padding: 25px 40px;
+        background-color: #f0f9f0;
+        color: #333;
+        font-family: 'Arial', sans-serif;
+        font-size: 18px;
+        line-height: 1.5;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        border-left: 8px solid #4CAF50;
+        animation: fadeIn 0.5s ease-in-out;
+        z-index: 1000;  /* Ensures it's above all content */
+        width: 300px;
+        text-align: center;
+    }
+
+    #popupMessage h4 {
+        margin: 0;
+        font-size: 22px;
+        font-weight: bold;
+        color: #4CAF50;
+    }
+
+    #popupMessage p {
+        margin: 10px 0;
+        font-size: 16px;
+        color: #555;
+    }
+
+    #closeButton {
+        margin-top: 20px;
+        padding: 8px 16px;
+        background-color: #4CAF50;
+        color: #fff;
+        font-size: 14px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    #closeButton:hover {
+        background-color: #45a049;
+    }
+</style>
+<style>
+    .tabular--wrapper {
+        margin: 20px;
+    }
+
+    .main--title {
+        font-size: 1.5rem;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .table-calendar-container {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        gap: 20px;
+    }
+
+    @media (min-width: 1024px) {
+        .table-calendar-container {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    .notice-board, .calendar-section {
+        background-color: white;
+        padding: 24px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .notice-board ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .notice-board li {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 12px;
+    }
+
+    .calendar-section table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .calendar-section th, .calendar-section td {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    .calendar-section th {
+        background-color: #f5f5f5;
+        color: #333;
+    }
+
+    .calendar-section td {
+        text-align: center;
+    }
+
+    .notification--icon .icon {
+        color: #333; /* Soft gray color for the icon */
+        font-size: 20px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
+
+    .notification--icon .badge {
+        position: absolute;
+        top: -5px;
+        right: -10px;
+        background-color: skyblue; 
+        color: white;
+        border-radius: 50%;
+        padding: 3px 6px;
+        font-size: 12px;
+    }
+
+
+</style>
+<style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+    *{
+        margin: 0;
+        padding: 0;
+        border: none;
+        outline: none;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+    }
+    body {
+        display: flex;
+        
+    }
+
+    .logo {
+        height: 80px;
+        padding: 16px;
+    }
+    .menu {
+        height: 88%;
+        position: relative;
+        list-style: none;
+        padding: 0;
+    }
+    .menu li{
+        padding: 1rem;
+        margin: 8px 0;
+        border-radius: 8px;
+        transition: all 0.5s ease-in-out;
+    }
+    .menu li:hover, .active{
+        background: #e0e0e058;
+    }
+    .menu a{
+        color: #fff;
+        font-size: 14px;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+    .menu a span{
+        overflow: hidden;
+    }
+    .menu a i{
+        font-size: 1.2rem;
+    }
+    .logout{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+    }
+    .main--content{
+        position: relative;
+        background: #ebe9e9 ;
+        width: 100%;
+        padding: 1rem;
+    }
+    .header--wrapper img{
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+        border-radius: 50%;
+    }
+    .header--wrapper{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        background: #fff;
+        border-radius: 10px;
+        padding: 10px 2rem;
+        margin-bottom: 1rem;
+    }
+    .header--title{
+        color:skyblue;
+    }
+    .user--info{
+        display: flex;
+        align-items: center;
+        gap: 1;
+    }
+    .search--box{
+        background: rgb(237, 237, 237);
+        border-radius: 15px;
+        color: skyblue;
+        display: flex;
+        align-items: center;
+        gap: 40px;
+        padding: 4px 12px;
+    }
+    .search--box input{
+        background: transparent;
+        padding: 10px;
+    }
+    .search--box i{
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: all 0.5s ease-out;
+    }
+    .search--box i:hover{
+        transition: scale(1.2);
+    }
+
+    .card-container{
+         background: #fff;
+         padding: 2rem;
+         border-radius: 10px;
+    }
+
+    .card-wrapper{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+    } 
+    .main--title{
+        color: skyblue;
+        padding-bottom: 10px;
+        font-size: 15px;
+    }
+    .payment--card{
+        background: rgb(229, 223, 223);
+        border-radius: 10px;
+        padding: 1.2rem;
+        width: 290px;
+        height: 150px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition: all 0.5s ease-in-out ;
+    }
+
+    .payment--card:hover{
+        transform: translateY(-5px);
+    }
+
+    .card-header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    } 
+    .amount{
+        display: flex;
+        flex-direction: column;
+    }
+    .title{
+        font-size: 12px;
+        font-weight: 200;
+    }
+    .amount--value {
+        font-size: 24px;
+        font-family: "Courier New", Courier,
+        monospace;
+        font-weight: 600;    
+    }
+    .icon{
+        color: #fff;
+        padding: 1rem;
+        height: 60px;
+        width: 60px;
+        text-align: center;
+        border-radius: 50%;
+        border-color: skyblue;
+        border-style: solid;
+        font-size: 1.5rem;
+        background: white;
+    }
+    .card-detail{
+        font-size: 18px;
+        color: #777777;
+        letter-spacing: 2px;
+        font-family:  "Courier New", Courier,
+        monospace;
+    }
+
+    .light-red{
+        background: rgb(251, 233, 233);
+    }
+    .light-purplr{
+        background: rgb(254, 226, 254);
+    }
+    .light-green{
+        background: rgb(235, 254, 235);
+    }
+    .light-blue{
+        background: rgb(236, 236, 254);
+    }
+    .dark-red{
+        background: red;
+    }
+    .dark-purple{
+        background: purple;
+    }
+    .dark-green{
+        background: green;
+    }
+    .dark-blue{
+        background: blue;
+    }
+
+    .tabular--wrapper{
+        background: #fff;
+        margin-top: 1rem;
+        border-radius: 10px;
+        padding: 2rem;
+    }
+    .table-container{
+        width: 100%;
+    }
+    .table{
+        width: 100%;
+        border-collapse: collapse;
+    }
+    thead{
+        background: skyblue;
+        color: #fff;
+    }
+    th{
+        padding: 15px;
+        text-align: left;
+    }
+    tbody{
+        background: #f2f2f2;
+    }
+    td{
+        padding: 15px;
+        font-size: 14px;
+        color: #333;
+    }
+    tr:nth-child(even){
+        background: #ffff;
+    }
+    tfoot{
+        background: rgba(113, 99, 186, 255);
+        font-weight: bold;
+        color: #fff;
+    }
+    tfoot td{
+        padding: 15px;
+    }
+    .table-container button{
+        color: green;
+        background: none;
+        cursor: pointer;
+    }
+
+</style>
+<!-- ── styles (scoped with .ev- prefix to avoid collisions) ── -->
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+.ev-wrap { font-family: 'DM Sans', sans-serif; padding: 1rem; }
+.ev-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    gap: 16px;
+    align-items: start;
+}
+@media (max-width: 768px) { .ev-grid { grid-template-columns: 1fr; } }
+
+.ev-panel {
+    background: #fff;
+    border: 0.5px solid #e5e7eb;
+    border-radius: 12px;
+    overflow: hidden;
+}
+.ev-panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 14px 18px;
+    border-bottom: 0.5px solid #e5e7eb;
+}
+.ev-panel-title {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: #6b7280;
+}
+
+/* ── subject filter buttons ── */
+.ev-filters { display: flex; gap: 6px; flex-wrap: wrap; }
+.ev-subj-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    padding: 4px 11px;
+    border-radius: 20px;
+    border: 0.5px solid #d1d5db;
+    background: #f9fafb;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all .15s;
+}
+.ev-subj-btn.active,
+.ev-subj-btn:hover {
+    background: #185FA5;
+    color: #fff;
+    border-color: #185FA5;
+}
+
+/* ── notice list ── */
+.ev-notice-list {
+    padding: 8px 0;
+    max-height: 460px;
+    overflow-y: auto;
+}
+.ev-notice-list::-webkit-scrollbar { width: 3px; }
+.ev-notice-list::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
+
+.ev-item {
+    display: grid;
+    grid-template-columns: 48px 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 18px;
+    border-bottom: 0.5px solid #f3f4f6;
+    transition: background .1s;
+}
+.ev-item:last-child { border-bottom: none; }
+.ev-item:hover { background: #f9fafb; }
+
+.ev-date-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    border: 0.5px solid #e5e7eb;
+    flex-shrink: 0;
+}
+.ev-date-day { font-size: 18px; font-weight: 600; line-height: 1; color: #111827; }
+.ev-date-mon { font-size: 10px; font-weight: 500; text-transform: uppercase; color: #9ca3af; letter-spacing: .06em; }
+
+.ev-body { min-width: 0; }
+.ev-topic { font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: #111827; }
+.ev-meta  { font-size: 11px; color: #9ca3af; margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.ev-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    padding: 3px 9px;
+    border-radius: 20px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+.ev-badge-math  { background: #E6F1FB; color: #185FA5; }
+.ev-badge-phys  { background: #EAF3DE; color: #3B6D11; }
+.ev-badge-eng   { background: #FAEEDA; color: #854F0B; }
+.ev-badge-life  { background: #FBEAF0; color: #993556; }
+.ev-badge-other { background: #F1EFE8; color: #5F5E5A; }
+
+.ev-load-wrap { padding: 10px 18px; border-top: 0.5px solid #f3f4f6; text-align: center; }
+.ev-load-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    padding: 6px 18px;
+    border-radius: 20px;
+    border: 0.5px solid #d1d5db;
+    background: none;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all .15s;
+}
+.ev-load-btn:hover { background: #f3f4f6; color: #111827; }
+.ev-empty { padding: 28px 18px; text-align: center; font-size: 13px; color: #9ca3af; }
+
+/* ── calendar panel ── */
+.ev-cal-body { padding: 14px 18px; }
+.ev-cal-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+.ev-cal-month { font-size: 14px; font-weight: 500; color: #111827; }
+.ev-cal-btn {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: #9ca3af;
+    padding: 2px 8px;
+    border-radius: 6px;
+    transition: background .12s;
+}
+.ev-cal-btn:hover { background: #f3f4f6; color: #111827; }
+
+.ev-cal-table { width: 100%; border-collapse: collapse; }
+.ev-cal-table th {
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: #9ca3af;
+    padding: 4px 0;
+    text-align: center;
+}
+.ev-cal-table td { text-align: center; padding: 3px; }
+
+.ev-cal-day {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 13px;
+    color: #374151;
+    transition: background .1s;
+}
+.ev-cal-day.ev-today      { background: #185FA5; color: #fff; font-weight: 500; }
+.ev-cal-day.ev-has-event  { background: #C0DD97; color: #27500A; font-weight: 500; cursor: pointer; }
+.ev-cal-day.ev-has-event:hover { background: #97C459; }
+.ev-cal-day.ev-other-month { color: #d1d5db; }
+
+.ev-cal-legend { display: flex; gap: 14px; margin-top: 12px; padding-top: 12px; border-top: 0.5px solid #f3f4f6; }
+.ev-leg { display: flex; align-items: center; gap: 6px; font-size: 11px; color: #9ca3af; }
+.ev-leg-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+</style>
+<div class="container">
+
+    <!--ATP Lessons-->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3>🔥 Today's Schedule ATP</h3>
+        </div>
+        <div class="card-body">
+
+            {% if today_lessons %}
+                <ul class="list-group mb-2">
+                    {% for lesson in today_lessons %}
+                        <li class="list-group-item">
+                            <strong>{{ lesson.subject }}</strong> — {{ lesson.topic }}
+                            <span class="float-right text-muted">{{ lesson.mode }}</span>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            {% if today_events %}
+                <div class="alert alert-warning mt-2">
+                    📌 {{ today_events.0.topic }} ({{ today_events.0.subject }}) —
+                    {{ today_events.0.date|date:"d M" }}
+
+                    <a href="#upcoming-events-card" class="ml-2 text-primary font-weight-bold">
+                        View Details →
+                    </a>
+                </div>
+            {% elif not today_lessons %}
+                <p>No lessons scheduled for today</p>
+            {% endif %}
+
+        </div>
+    </div>
+    <!-- ── Year Filter Bar ── -->
+    <div class="card mb-3">
+    <div class="card-body py-2">
+        <div class="d-flex align-items-center flex-wrap" style="gap: 0.4rem;">
+        <span class="font-weight-bold mr-2">
+            <i class="fa fa-calendar"></i> Dashboard Year:
+        </span>
+    
+        {% for year in available_years %}
+            <a href="?year={{ year }}"
+            class="btn btn-sm {% if selected_year == year|stringformat:'s' %}btn-primary{% else %}btn-outline-primary{% endif %}">
+            {{ year }}
+            </a>
+        {% empty %}
+            <span class="text-muted small">No data available.</span>
+        {% endfor %}
+    
+        <span class="ml-auto text-muted small">
+            Showing data for: <strong>{{ filter_year }}</strong>
+        </span>
+        </div>
+    </div>
+    </div>
+    <!-- Cards Section -->
+    <div class="animated fadeIn">
+        <div class="row">
+            <!-- Card: Total Hours -->
+            <div class="col-sm-6 col-lg-3">
+                <div class="card bg-white text-primary">
+                    <div class="card-body pb-0">
+                        <div class="d-flex justify-content-between">
+                            <div class="card-title">Total Timesheet Hours</div>
+                            <div class="btn-group">
+                                <button class="btn btn-blue dropdown-toggle p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="icon-settings"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    {% for date, total_hours in total_hours_by_date.items %}
+                                        <a class="dropdown-item" href="#">{{ date }} - {{ total_hours|floatformat:2 }} hours</a>
+                                    {% empty %}
+                                        <a class="dropdown-item disabled" href="#">No timesheets available</a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-wrapper text-center my-3" style="position: relative; height: 300px;">
+                            <canvas id="donutChartTotalLearners" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></canvas>
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -60%); font-size: 24px; font-weight: bold;">
+                                Total Timesheet Hours: {{ total_hours }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Card: Total Classes -->
+            <div class="col-sm-6 col-lg-3">
+                <div class="card bg-white text-primary">
+                    <div class="card-body pb-0">
+                        <div class="d-flex justify-content-between">
+                            <div class="card-title">Total Classes</div>
+                            <div class="btn-group">
+                                <button class="btn btn-blue dropdown-toggle p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="icon-settings"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item" href="#">All Classes</a>
+                                    {% for combination in grade_subject_combinations %}
+                                        <a class="dropdown-item" href="#">
+                                            {{ combination.grade__grade }} - {{ combination.subject__subject }}
+                                        </a>
+                                    {% empty %}
+                                        <a class="dropdown-item disabled" href="#">No classes available</a>    
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-wrapper text-center my-3" style="position: relative; height: 300px;">
+                            <canvas id="donutChartActiveStatus" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></canvas>
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -60%); font-size: 24px; font-weight: bold;">
+                                Register's Filled: {{ total_classes }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Card: Total Learners -->
+            <div class="col-sm-6 col-lg-3">
+                <div class="card bg-white text-primary">
+                    <div class="card-body pb-0">
+                        <div class="d-flex justify-content-between">
+                            <div class="card-title">Total Learners</div>
+                            <div class="btn-group">
+                                <button class="btn btn-blue dropdown-toggle p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="icon-settings"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    <a class="dropdown-item" href="#">All Learners</a>
+                                    {% for classroom, learner_count in classroom_learners.items %}
+                                        <a class="dropdown-item" href="#">
+                                            {{ classroom }} - {{ learner_count }} Learners
+                                        </a>
+                                    {% empty %}
+                                        <a class="dropdown-item disabled" href="#">No learners available</a>    
+                                    {% endfor %} 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-wrapper text-center my-3" style="position: relative; height: 300px;">
+                            <canvas id="donutChartTotalCenters" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></canvas>
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -60%); font-size: 24px; font-weight: bold;">
+                                Learners: {{ totalL }}       
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card: Learner Attendance -->
+            <div class="col-sm-6 col-lg-3">
+                <div class="card bg-white text-primary">
+                    <div class="card-body pb-0">
+                        <div class="d-flex justify-content-between">
+                            <div class="card-title">Attendance Percentage</div>
+                            <div class="btn-group">
+                                <button class="btn btn-blue dropdown-toggle p-0" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="icon-settings"></i>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                    {% for grade_subject, attendance_data in classroom_attendance.items %}
+                                        <div class="dropdown-item">
+                                            <strong>{{ grade_subject }}</strong>
+                                            <div class="ml-3">
+                                                {% for date, attendance in attendance_data.date_attendance.items %}
+                                                    <div class="dropdown-item">
+                                                        {{ date }} - {{ attendance_data.overall_percentage|floatformat:2 }}%
+                                                    </div>
+                                                {% empty %}
+                                                    <a class="dropdown-item disabled" href="#">No attendance available</a>    
+                                                {% endfor %}
+                                                <!-- <div class="text-muted mt-1">
+                                                    Overall: {{ attendance_data.overall_percentage|floatformat:2 }}%
+                                                </div> -->
+                                            </div>
+                                        </div>
+                                    {% empty %}
+                                    <a class="dropdown-item disabled" href="#">No attendance available</a>    
+                                        <!-- {% if not forloop.last %}
+                                            <div class="dropdown-divider"></div>
+                                        {% endif %} -->
+                                    {% endfor %}   
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-wrapper text-center my-3" style="position: relative; height: 300px;">
+                            <canvas id="donutChartLearnerAttendance" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></canvas>
+                            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 18px; font-weight: bold; text-align: center;">
+                                Attendance <br>
+                                <span>{{ overall_percentage|floatformat:2 }}%</span>
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+   <!-- Timesheet Section -->
+   <div class="card mb-4">
+    <div class="card-header">
+        <h3>Timesheet</h3>
+    </div>
+    <div class="card-body">
+        <form action="{% url 'teacher-dashboard' %}" method="post" >
+            {% csrf_token %}
+            {{ timesheet_form.as_p }}
+            <input type="hidden" name="form_type" value="timesheet_form">
+            <button type="submit" class="btn btn-primary">Save Timesheet</button>
+        </form>
+        <!-- Modal for Messages -->
+        <div id="messageModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="messageModalLabel">Notifications</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }} mb-2" role="alert">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <p>No messages to display.</p>
+                        {% endif %}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <hr>
+
+        <style>
+            .center-text {
+                text-align: center;
+                vertical-align: middle;
+            }
+
+            .timesheet-table-wrapper {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                width: 100%;
+            }
+
+            .timesheet-table {
+                width: 100%;
+                min-width: 1100px;
+                border-collapse: collapse;
+            }
+
+            .timesheet-table th,
+            .timesheet-table td {
+                white-space: nowrap;
+                vertical-align: middle;
+            }
+
+            @media (max-width: 768px) {
+
+                .timesheet-table {
+                    min-width: 100%;
+                }
+
+                .timesheet-table thead {
+                    display: none;
+                }
+
+                .timesheet-table,
+                .timesheet-table tbody,
+                .timesheet-table tr,
+                .timesheet-table td {
+                    display: block;
+                    width: 100%;
+                }
+
+                .timesheet-table tr {
+                    margin-bottom: 20px;
+                    border: 1px solid #dee2e6;
+                    border-radius: 10px;
+                    padding: 12px;
+                    background: #fff;
+                    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+                }
+
+                .timesheet-table td {
+                    text-align: right !important;
+                    padding-left: 50%;
+                    position: relative;
+                    white-space: normal;
+                    border: none;
+                    border-bottom: 1px solid #f1f1f1;
+                    padding-top: 10px;
+                    padding-bottom: 10px;
+                }
+
+                .timesheet-table td:last-child {
+                    border-bottom: none;
+                }
+
+                .timesheet-table td::before {
+                    content: attr(data-label);
+                    position: absolute;
+                    left: 12px;
+                    width: 45%;
+                    text-align: left;
+                    font-weight: 600;
+                    color: #333;
+                }
+
+                .edit-history-row td {
+                    padding-left: 15px !important;
+                    text-align: left !important;
+                }
+
+                .edit-history-row td::before {
+                    display: none;
+                }
+
+                .btn {
+                    width: 100%;
+                    margin-top: 5px;
+                }
+            }
+        </style>
+
+        <!-- ── Month Filter Buttons ── -->
+        <div class="card mb-3">
+            <div class="card-body py-2">
+
+                <div class="d-flex flex-wrap align-items-center"
+                    style="gap: 0.5rem;">
+
+                    <span class="font-weight-bold mr-2">
+                        <i class="fa fa-calendar"></i> Filter by Month:
+                    </span>
+
+                    {% for month_date in available_months %}
+
+                        <a href="?year={{ selected_year }}&month={{ month_date.month }}"
+                        class="btn btn-sm
+                        {% if selected_month == month_date.month|stringformat:'s' %}
+                                btn-primary
+                        {% else %}
+                                btn-outline-primary
+                        {% endif %}">
+
+                            {{ month_date|date:"F" }}
+
+                        </a>
+
+                    {% empty %}
+
+                        <span class="text-muted small">
+                            No months available
+                        </span>
+
+                    {% endfor %}
+
+                    <span class="ml-auto text-muted small">
+                        Showing:
+                        <strong>
+                            {% for month_date in available_months %}
+                                {% if selected_month == month_date.month|stringformat:'s' %}
+                                    {{ month_date|date:"F Y" }}
+                                {% endif %}
+                            {% endfor %}
+                        </strong>
+                    </span>
+
+                </div>
+
+            </div>
+        </div>
+
+        <h4 class="mb-3">Your Timesheets</h4>
+
+        <div class="timesheet-table-wrapper">
+            <table class="table table-bordered table-hover timesheet-table">
+                <thead class="thead-light">
+                    <tr>
+                        <th class='center-text'>Topic</th>
+                        <th class='center-text'>Start Time</th>
+                        <th class='center-text'>End Time</th>
+                        <th class='center-text'>Class Name(Grade)</th>
+                        <th class='center-text'>Subject</th>
+                        <th class='center-text'>Total Hours</th>
+                        <th class='center-text'>Date</th>
+                        <th class='center-text'>Created At</th>
+                        <th class='center-text'>Edit</th>
+                        <th class='center-text'>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for timesheet in timesheets %}
+                    <tr>
+                        <td data-label="Topic">{{ timesheet.topic }}</td>
+
+                        <td data-label="Start Time">
+                            {{ timesheet.session.start_time|date:"H:i" }}
+                        </td>
+
+                        <td data-label="End Time">
+                            {{ timesheet.session.end_time|date:"H:i" }}
+                        </td>
+
+                        <td data-label="Class Name(Grade)">
+                            {{ timesheet.session.grade.grade }}
+                        </td>
+
+                        <td data-label="Subject">
+                            {{ timesheet.session.subject.subject }}
+                        </td>
+
+                        <td data-label="Total Hours">
+                            {{ timesheet.atp_hours }}
+                        </td>
+
+                        <td data-label="Date">
+                            {{ timesheet.date }}
+                        </td>
+
+                        <td data-label="Created At">
+                            {{ timesheet.date_submitted }}
+                        </td>
+
+                        <td data-label="Edit">
+                            {% if timesheet.status != 'approved' and timesheet.edit_count < 2 %}
+                                <a href="{% url 'edit_timesheet' timesheet.id %}"
+                                class="btn btn-sm btn-primary">
+                                    Edit ({{ timesheet.remaining_edits }} left)
+                                </a>
+                            {% else %}
+                                <span class="text-muted">Locked</span>
+                            {% endif %}
+                        </td>
+
+                        <td data-label="Status">
+                            {% if timesheet.status == 'approved' %}
+                                <span class="badge badge-success">Approved</span>
+
+                            {% elif timesheet.status == 'rejected' %}
+                                <span class="badge badge-danger">Rejected ❌</span>
+
+                                {% if timesheet.rejection_comment %}
+                                    <div class="small text-danger mt-1">
+                                        <strong>Reason:</strong>
+                                        {{ timesheet.rejection_comment }}
+                                    </div>
+                                {% endif %}
+
+                            {% else %}
+                                <span class="badge badge-warning">
+                                    Pending Approval
+                                </span>
+                            {% endif %}
+                        </td>
+                    </tr>
+
+                    <tr class="edit-history-row">
+                        <td colspan="10">
+
+                            <button type="button"
+                                    class="btn btn-sm btn-outline-secondary"
+                                    onclick="toggleBox('editHistory{{ timesheet.id }}')">
+                                View Edit History
+                                ({{ timesheet.edit_history.count }})
+                            </button>
+
+                            <div id="editHistory{{ timesheet.id }}"
+                                style="display:none;"
+                                class="mt-2">
+
+                                <div class="card card-body p-2">
+                                    {% for history in timesheet.edit_history.all %}
+
+                                    <div class="small text-muted mb-3 border rounded p-2">
+
+                                        <strong>
+                                            {{ history.edited_by }}
+                                        </strong>
+
+                                        edited on
+
+                                        {{ history.edited_at|date:"M. d, Y, g:i a" }}
+
+                                        <hr>
+
+                                        <strong>Old Date:</strong>
+                                        {{ history.old_date|date:"M. d, Y" }}
+
+                                        <br>
+
+                                        <strong>Old Start Time:</strong>
+                                        {{ history.old_start_time|time:"H:i" }}
+
+                                        <br>
+
+                                        <strong>Old End Time:</strong>
+                                        {{ history.old_end_time|time:"H:i" }}
+
+                                        <br>
+
+                                        <strong>Old Grade:</strong>
+                                        {{ history.old_grade }}
+
+                                        <br>
+
+                                        <strong>Old Subject:</strong>
+                                        {{ history.old_subject }}
+
+                                        <br>
+
+                                        <strong>Old Topic:</strong>
+                                        {{ history.old_topic }}
+
+                                        <br>
+
+                                        <strong>Old Hours:</strong>
+                                        {{ history.old_atp_hours }}
+
+                                        <hr>
+
+                                        <strong>New Start Time:</strong>
+                                        {{ history.new_start_time|time:"H:i" }}
+
+                                        <br>
+
+                                        <strong>New End Time:</strong>
+                                        {{ history.new_end_time|time:"H:i" }}
+
+                                        <br>
+
+                                        <strong>New Grade:</strong>
+                                        {{ history.new_grade }}
+
+                                        <br>
+
+                                        <strong>New Subject:</strong>
+                                        {{ history.new_subject }}
+
+                                        <br>
+
+                                        <strong>New Topic:</strong>
+                                        {{ history.new_topic }}
+
+                                        <br>
+
+                                        <strong>New Hours:</strong>
+                                        {{ history.new_atp_hours }}
+
+                                    </div>
+
+                                {% empty %}
+
+                                    <div class="small text-muted">
+                                        No edits yet.
+                                    </div>
+
+                                {% endfor %}
+                                </div>
+                            </div>
+
+                        </td>
+                    </tr>
+
+                    {% empty %}
+                    <tr>
+                        <td colspan="10">No timesheets recorded yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+   </div>
+
+    <!-- Notifications Section -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h3>Notifications</h3>
+        </div>
+        <div class="card-body">
+            <!-- Populate with notifications -->
+            <ul class="list-group">
+                <li class="list-group-item">All teachers to undergo System Training</li>
+                <li class="list-group-item">Keep your password and credential safe</li>
+                <li class="list-group-item">Log your timesheets every day</li>
+            </ul>
+        </div>
+    </div>
+
+    <!--Calendar-->
+    <!-- ═══════════ UPCOMING EVENTS CARD ═══════════ -->
+    <div class="card mb-4" id="upcoming-events-card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h3 class="mb-0">Upcoming Events ATP</h3>
+        </div>
+        
+        <div class="card-body p-0">
+        
+            <div class="ev-wrap">
+                <div class="ev-grid">
+            
+                    <!-- ════ NOTICE BOARD ════ -->
+                    <div class="ev-panel" id="ev-notice-panel">
+                        <div class="ev-panel-head">
+                            <span class="ev-panel-title">Notice Board</span>
+                            <div class="ev-filters" id="ev-filters">
+                            <button class="ev-subj-btn active" data-subj="all">All</button>
+                            <!-- dynamically added per subject by JS below -->
+                            </div>
+                        </div>
+                
+                        <!-- Django renders ALL events into a hidden JSON blob -->
+                        <script id="ev-data" type="application/json">
+                            [
+                            {% for event in upcoming_events %}
+                            {
+                                "date":    "{{ event.date|date:'Y-m-d' }}",
+                                "subject": "{{ event.subject|escapejs }}",
+                                "topic":   "{{ event.topic|escapejs }}",
+                                "mode":    "{{ event.mode|escapejs }}",
+                                "paper":   "{{ event.paper|default:'None'|escapejs }}"
+                            }{% if not forloop.last %},{% endif %}
+                            {% endfor %}
+                            ]
+                        </script>
+                
+                        <div class="ev-notice-list" id="ev-notice-list"></div>
+                
+                        <div class="ev-load-wrap">
+                            <button class="ev-load-btn" id="ev-load-btn" style="display:none;">
+                            Load more events
+                            </button>
+                        </div>
+                    </div>
+            
+                    <!-- ════ CALENDAR ════ -->
+                    <div class="ev-panel">
+                        <div class="ev-panel-head">
+                            <span class="ev-panel-title">Calendar</span>
+                        </div>
+                        <div class="ev-cal-body">
+                            <div class="ev-cal-nav">
+                            <button class="ev-cal-btn" id="ev-cal-prev">&#8592;</button>
+                            <span class="ev-cal-month" id="ev-cal-month"></span>
+                            <button class="ev-cal-btn" id="ev-cal-next">&#8594;</button>
+                            </div>
+                            <table class="ev-cal-table">
+                            <thead><tr id="ev-cal-head"></tr></thead>
+                            <tbody id="ev-cal-body"></tbody>
+                            </table>
+                            <div class="ev-cal-legend">
+                            <div class="ev-leg"><div class="ev-leg-dot" style="background:#185FA5"></div>Today</div>
+                            <div class="ev-leg"><div class="ev-leg-dot" style="background:#97C459"></div>ATP Event</div>
+                            </div>
+                        </div>
+                    </div>
+            
+                </div><!-- /.ev-grid -->
+            </div><!-- /.ev-wrap -->
+            
+        </div><!-- /.card-body -->
+    </div><!-- /.card -->
+    {% if messages %}
+    <!-- Pop-up message container -->
+    <div id="popupMessage">
+        {% for message in messages %}
+            {{ message }}  <!-- This will hold the Django message -->
+        {% endfor %}
+        <button id="closeButton">Close</button>
+    </div>
+    {% endif %}
+</div>
+<style>
+    /* Additional styles for circular progress bars */
+    .circular-chart {
+        display: block;
+        margin: 10px auto;
+        max-width: 80%;
+        max-height: 250px;
+    }
+    .circle-bg {
+        fill: none;
+        stroke: #eee;
+        stroke-width: 3.8;
+    }
+    .circle {
+        fill: none;
+        stroke-width: 2.8;
+        stroke-linecap: round;
+        animation: progress 1s ease-out forwards;
+    }
+    .percentage {
+        fill: #0891B2;
+        font-family: sans-serif;
+        font-size: 0.5em;
+        text-anchor: middle;
+    }
+    @keyframes progress {
+        0% {
+            stroke-dasharray: 0 100;
+        }
+    }
+    .blue .circle {
+        stroke: #0891B2;
+    }
+    
+</style>
+<!-- Additional Chart.js Code -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" ></script>
+<script>
+    // Show the popup if there's a message
+    const popupMessage = document.getElementById('popupMessage');
+    const closeButton = document.getElementById('closeButton');
+
+    if (popupMessage.textContent.trim() !== '') {
+        popupMessage.style.display = 'block';
+    }
+
+    // Close popup on button click
+    closeButton.addEventListener('click', function () {
+        popupMessage.style.display = 'none';
+    });
+</script>
+
+{{ learner_gender_counts|json_script:"learner-gender-data" }}
+{{ class_status_counts|json_script:"class-status-data" }}
+{{ attendance_chart_counts|json_script:"attendance-chart-data" }}
+{{ total_hours|default:0|json_script:"total-hours-data" }}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    Chart.register(ChartDataLabels);
+ 
+    // ── Read data injected by Django ──────────────────────────────────────
+    const learnerGenderCounts = JSON.parse(
+        document.getElementById('learner-gender-data').textContent
+    );
+    const classStatusCounts = JSON.parse(
+        document.getElementById('class-status-data').textContent
+    );
+    const attendanceChartCounts = JSON.parse(
+        document.getElementById('attendance-chart-data').textContent
+    );
+    const totalHours = JSON.parse(
+        document.getElementById('total-hours-data').textContent
+    );
+ 
+    // ── Shared options (matches Center Manager exactly) ───────────────────
+    const commonOptions = {
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '70%',
+        plugins: {
+            legend: {
+                display: true,
+                position: 'bottom',
+                labels: {
+                    font: { size: 12 },
+                    boxWidth: 10,
+                    padding: 15
+                }
+            },
+            datalabels: { display: false }
+        }
+    };
+ 
+    // ── Zero/null-safe dataset builder (matches Center Manager) ───────────
+    function prepareDataset(values, colors, hoverColors) {
+        return values.map((v, i) => v === 0
+            ? { value: 0.01, backgroundColor: '#E5E7EB', hoverBackgroundColor: '#D1D5DB' }
+            : { value: v, backgroundColor: colors[i], hoverBackgroundColor: hoverColors[i] }
+        );
+    }
+ 
+    // ── 1) TOTAL TIMESHEET HOURS ──────────────────────────────────────────
+    const ctxHours = document.getElementById('donutChartTotalLearners');
+    if (ctxHours) {
+        const ds = prepareDataset(
+            [totalHours, 0],
+            ['#0891B2', '#E5E7EB'],
+            ['#0EA5E9', '#D1D5DB']
+        );
+        new Chart(ctxHours, {
+            type: 'doughnut',
+            data: {
+                labels: ['Hours Logged', 'Remaining'],
+                datasets: [{
+                    data: ds.map(d => d.value),
+                    backgroundColor: ds.map(d => d.backgroundColor),
+                    hoverBackgroundColor: ds.map(d => d.hoverBackgroundColor)
+                }]
+            },
+            options: {
+                ...commonOptions,
+                plugins: { ...commonOptions.plugins, legend: { display: false } }
+            }
+        });
+    }
+ 
+    // ── 2) CLASSES STATUS (Active vs Empty) ───────────────────────────────
+    const ctxClasses = document.getElementById('donutChartActiveStatus');
+    if (ctxClasses) {
+        const ds = prepareDataset(
+            [classStatusCounts.active || 0, classStatusCounts.empty || 0],
+            ['#10B981', '#F59E0B'],
+            ['#34D399', '#FBBF24']
+        );
+        new Chart(ctxClasses, {
+            type: 'doughnut',
+            data: {
+                labels: ['Active Classes', 'Empty Classes'],
+                datasets: [{
+                    data: ds.map(d => d.value),
+                    backgroundColor: ds.map(d => d.backgroundColor),
+                    hoverBackgroundColor: ds.map(d => d.hoverBackgroundColor)
+                }]
+            },
+            options: commonOptions
+        });
+    }
+ 
+    // ── 3) LEARNERS BY GENDER ─────────────────────────────────────────────
+    const ctxLearners = document.getElementById('donutChartTotalCenters');
+    if (ctxLearners) {
+        const ds = prepareDataset(
+            [learnerGenderCounts.male || 0, learnerGenderCounts.female || 0, learnerGenderCounts.other || 0],
+            ['#3B82F6', '#EC4899', '#8B5CF6'],
+            ['#60A5FA', '#F472B6', '#A78BFA']
+        );
+        new Chart(ctxLearners, {
+            type: 'doughnut',
+            data: {
+                labels: ['Male', 'Female', 'Other'],
+                datasets: [{
+                    data: ds.map(d => d.value),
+                    backgroundColor: ds.map(d => d.backgroundColor),
+                    hoverBackgroundColor: ds.map(d => d.hoverBackgroundColor)
+                }]
+            },
+            options: commonOptions
+        });
+    }
+ 
+    // ── 4) LEARNER ATTENDANCE (Present / Absent / Late) ───────────────────
+    const ctxAttendance = document.getElementById('donutChartLearnerAttendance');
+    if (ctxAttendance) {
+        const ds = prepareDataset(
+            [attendanceChartCounts.present || 0, attendanceChartCounts.absent || 0, attendanceChartCounts.late || 0],
+            ['#22C55E', '#EF4444', '#F59E0B'],
+            ['#4ADE80', '#F87171', '#FBBF24']
+        );
+        new Chart(ctxAttendance, {
+            type: 'doughnut',
+            data: {
+                labels: ['Present', 'Absent', 'Late'],
+                datasets: [{
+                    data: ds.map(d => d.value),
+                    backgroundColor: ds.map(d => d.backgroundColor),
+                    hoverBackgroundColor: ds.map(d => d.hoverBackgroundColor)
+                }]
+            },
+            options: commonOptions
+        });
+    }
+});
+</script>
+
+<script id="atp-data" type="application/json">
+    {{ atp_dates|safe }}
+</script>
+<script>
+    // JavaScript to generate the real-time calendar
+    function generateCalendar() {
+        const atpDates = JSON.parse(
+            document.getElementById('atp-data').textContent
+        );
+
+        const calendarElement = document.getElementById('calendar');
+        const currentDate = new Date();
+        const month = currentDate.toLocaleString('default', { month: 'long' });
+        const year = currentDate.getFullYear();
+        const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
+        const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
+
+        const today = currentDate.getDate();  // Get today's date
+
+        {{ atp_dates|safe }}
+
+        function scrollToNotice() {
+            document.getElementById('notice-board').scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+    
+        let calendarHTML = `
+            <div class="flex justify-between mb-4">
+                <span class="text-lg font-semibold">${month} ${year}</span>
+            </div>
+            <table class="w-full table-fixed text-center border-collapse">
+                <thead>
+                    <tr class="bg-gray-100">
+                        <th class="border p-2">Sun</th>
+                        <th class="border p-2">Mon</th>
+                        <th class="border p-2">Tue</th>
+                        <th class="border p-2">Wed</th>
+                        <th class="border p-2">Thu</th>
+                        <th class="border p-2">Fri</th>
+                        <th class="border p-2">Sat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>`;
+    
+        // Empty cells for days before the first day of the month
+        for (let i = 0; i < firstDay; i++) {
+            calendarHTML += '<td class="border p-2"></td>';
+        }
+    
+        // Add the days of the month
+        for (let day = 1; day <= daysInMonth; day++) {
+            if ((day + firstDay - 1) % 7 === 0 && day !== 1) {
+                calendarHTML += '</tr><tr>'; // Start a new row every Sunday
+            }
+            
+            // Highlight today's date with a different background color
+            const fullDate = `${year}-${String(currentDate.getMonth()+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
+
+            const isATP = atpDates.includes(fullDate);
+
+            if (day === today) {
+                calendarHTML += `<td class="border p-2 bg-blue-500 text-white font-bold rounded">${day}</td>`;
+            } else if (isATP) {
+                calendarHTML += `<td class="border p-2 bg-green-300 text-black font-semibold rounded">${day}</td>`;
+            } else {
+                calendarHTML += `<td class="border p-2 hover:bg-gray-100 cursor-pointer">${day}</td>`;
+            }
+            
+        }
+    
+        // Close the last row of the table
+        calendarHTML += `
+                    </tr>
+                </tbody>
+            </table>
+        `;
+    
+        calendarElement.innerHTML = calendarHTML;
+    }
+    
+    // Generate calendar when the page loads
+    window.onload = generateCalendar;
+</script>
+
+    <!-- ══════════════════════════════════════════════
+    JavaScript — reads from the JSON blob above,
+    no hardcoded data.
+══════════════════════════════════════════════ -->
+<script>
+(function () {
+'use strict';
+
+/* ── 1. Parse event data from Django ── */
+const EVENTS = JSON.parse(
+    document.getElementById('ev-data').textContent
+);
+
+/* ── 2. Badge class helper ── */
+const BADGE_MAP = {
+    'mathematics':      'ev-badge-math',
+    'physical sciences':'ev-badge-phys',
+    'english':          'ev-badge-eng',
+    'life sciences':    'ev-badge-life',
+};
+function badgeClass(subj) {
+    return BADGE_MAP[subj.toLowerCase()] || 'ev-badge-other';
+}
+function shortSubj(subj) {
+    const m = {
+    'mathematics':       'Maths',
+    'physical sciences': 'Phys Sci',
+    'english':           'English',
+    'life sciences':     'Life Sci',
+    };
+    return m[subj.toLowerCase()] || subj;
+}
+
+/* ── 3. Build unique subject list for filter buttons ── */
+const subjects = [...new Set(EVENTS.map(e => e.subject))].sort();
+const filtersEl = document.getElementById('ev-filters');
+subjects.forEach(subj => {
+    const btn = document.createElement('button');
+    btn.className = 'ev-subj-btn';
+    btn.dataset.subj = subj;
+    btn.textContent = shortSubj(subj);
+    filtersEl.appendChild(btn);
+});
+
+/* ── 4. Notice board state ── */
+let activeSubj   = 'all';
+let visibleCount = 8;
+const PAGE_SIZE  = 5;
+const todayStr   = new Date().toISOString().slice(0, 10);
+
+function filteredEvents() {
+    return EVENTS
+    .filter(e => e.date >= todayStr)
+    .filter(e => activeSubj === 'all' || e.subject === activeSubj)
+    .sort((a, b) => a.date.localeCompare(b.date));
+}
+
+function fmtDateBox(ds) {
+    const d = new Date(ds + 'T00:00:00');
+    return {
+    day: d.getDate(),
+    mon: d.toLocaleString('default', { month: 'short' })
+    };
+}
+
+function renderNotices() {
+    const list = document.getElementById('ev-notice-list');
+    const all  = filteredEvents();
+    const shown = all.slice(0, visibleCount);
+
+    if (shown.length === 0) {
+    list.innerHTML = '<div class="ev-empty">No upcoming events for this subject.</div>';
+    } else {
+    list.innerHTML = shown.map(ev => {
+        const { day, mon } = fmtDateBox(ev.date);
+        const paper = ev.paper && ev.paper !== 'None' ? ' · ' + ev.paper : '';
+        return `<div class="ev-item">
+        <div class="ev-date-box">
+            <span class="ev-date-day">${day}</span>
+            <span class="ev-date-mon">${mon}</span>
+        </div>
+        <div class="ev-body">
+            <div class="ev-topic">${ev.topic}</div>
+            <div class="ev-meta">${ev.mode}${paper}</div>
+        </div>
+        <span class="ev-badge ${badgeClass(ev.subject)}">${shortSubj(ev.subject)}</span>
+        </div>`;
+    }).join('');
+    }
+
+    const loadBtn = document.getElementById('ev-load-btn');
+    loadBtn.style.display = all.length > visibleCount ? 'inline-block' : 'none';
+}
+
+/* ── 5. Filter button clicks ── */
+filtersEl.addEventListener('click', e => {
+    const btn = e.target.closest('.ev-subj-btn');
+    if (!btn) return;
+    filtersEl.querySelectorAll('.ev-subj-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeSubj = btn.dataset.subj;
+    visibleCount = 8;
+    renderNotices();
+});
+
+/* ── 6. Load more ── */
+document.getElementById('ev-load-btn').addEventListener('click', () => {
+    visibleCount += PAGE_SIZE;
+    renderNotices();
+});
+
+/* ── 7. Calendar ── */
+const eventDateSet = new Set(EVENTS.map(e => e.date));
+const MONTHS = ['January','February','March','April','May','June',
+                'July','August','September','October','November','December'];
+const DAYS   = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+
+let calYear  = new Date().getFullYear();
+let calMonth = new Date().getMonth();
+
+function renderCal() {
+    document.getElementById('ev-cal-month').textContent =
+    MONTHS[calMonth] + ' ' + calYear;
+
+    document.getElementById('ev-cal-head').innerHTML =
+    DAYS.map(d => `<th>${d}</th>`).join('');
+
+    const firstDay    = new Date(calYear, calMonth, 1).getDay();
+    const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+    const prevDays    = new Date(calYear, calMonth, 0).getDate();
+
+    let cells = [];
+    for (let i = firstDay - 1; i >= 0; i--) cells.push({ day: prevDays - i, cur: false });
+    for (let d = 1; d <= daysInMonth; d++)   cells.push({ day: d, cur: true  });
+    while (cells.length % 7 !== 0)           cells.push({ day: cells.length - daysInMonth - firstDay + 1, cur: false });
+
+    const body = document.getElementById('ev-cal-body');
+    let rows = '';
+    for (let r = 0; r < cells.length / 7; r++) {
+    rows += '<tr>';
+    for (let c = 0; c < 7; c++) {
+        const cell = cells[r * 7 + c];
+        const ds   = cell.cur
+        ? `${calYear}-${String(calMonth + 1).padStart(2,'0')}-${String(cell.day).padStart(2,'0')}`
+        : '';
+        const isToday    = ds === todayStr;
+        const hasEvent   = cell.cur && eventDateSet.has(ds);
+        let cls = 'ev-cal-day';
+        if (!cell.cur)          cls += ' ev-other-month';
+        else if (isToday)       cls += ' ev-today';
+        else if (hasEvent)      cls += ' ev-has-event';
+        rows += `<td><span class="${cls}" data-date="${ds}">${cell.day}</span></td>`;
+    }
+    rows += '</tr>';
+    }
+    body.innerHTML = rows;
+
+    /* clicking an event date scrolls to & filters the notice board */
+    body.querySelectorAll('.ev-has-event').forEach(el => {
+    el.addEventListener('click', () => {
+        activeSubj   = 'all';
+        visibleCount = 8;
+        filtersEl.querySelectorAll('.ev-subj-btn').forEach(b => b.classList.remove('active'));
+        filtersEl.querySelector('[data-subj="all"]').classList.add('active');
+        renderNotices();
+        document.getElementById('ev-notice-panel')
+        .scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+    });
+}
+
+document.getElementById('ev-cal-prev').addEventListener('click', () => {
+    calMonth--;
+    if (calMonth < 0) { calMonth = 11; calYear--; }
+    renderCal();
+});
+document.getElementById('ev-cal-next').addEventListener('click', () => {
+    calMonth++;
+    if (calMonth > 11) { calMonth = 0; calYear++; }
+    renderCal();
+});
+
+/* ── 8. Init ── */
+renderNotices();
+renderCal();
+})();
+</script>
+<script>
+  function toggleBox(id) {
+    const box = document.getElementById(id);
+    if (box) box.style.display = box.style.display === 'none' ? 'block' : 'none';
+  }
+</script>
+    
+{% endblock %}
